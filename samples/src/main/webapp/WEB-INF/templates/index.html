@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title></title>
+</head>
+
+<body>
+<ul>
+    <li>
+        <a th:with="link=${#links.link('sampleController' , 'endpoint1' , 'id' , 'id1')}"
+           th:href="${link}" th:text="${link}"></a>
+    </li>
+    <li>
+        <a th:with="link=${#links.link('sampleController' , 'endpoint2' , 'symbolicName' , 's1' , 'version' , 'v1' , 'extension' , 'e1')}"
+           th:href="${link}" th:text="${link}"></a>
+    </li>
+</ul>
+</body>
+</html>
