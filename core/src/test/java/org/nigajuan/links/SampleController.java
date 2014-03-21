@@ -1,6 +1,7 @@
 package org.nigajuan.links;
 
 
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +19,9 @@ public class SampleController {
     }
 
     @RequestMapping("/endpoint3/{symbolicName:[a-z-]+}-{version:\\d\\.\\d\\.\\d}{extension:\\.[a-z]+}")
-    public void endpoint3(@PathVariable String symbolicName , @PathVariable String version, @PathVariable String extension,
+    public HttpEntity endpoint3(@PathVariable String symbolicName , @PathVariable String version, @PathVariable String extension,
                           @RequestParam(value = "q", required = true) String query){
+        return null;
     }
 
 

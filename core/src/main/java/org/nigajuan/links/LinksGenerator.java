@@ -5,11 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.util.UriTemplate;
 
+import javax.servlet.ServletContext;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,12 +19,14 @@ import java.util.Map;
  * Created by nithril on 19/03/14.
  */
 @Service
-public class LinksGenerator {
+public class LinksGenerator implements ServletContextAware{
 
     private static Logger log = LoggerFactory.getLogger(LinksGenerator.class);
 
     @Autowired
     private RequestMappingHandlerMapping requestMappingHandlerMapping;
+
+    private ServletContext servletContext;
 
     private boolean throwExceptionIfExpandFails = false;
 
@@ -34,7 +38,6 @@ public class LinksGenerator {
         Assert.notNull(beanName);
         Assert.notNull(methodName);
         Assert.notEmpty(params);
-
 
         Map.Entry<RequestMappingInfo, HandlerMethod> method = null;
 
@@ -66,9 +69,11 @@ public class LinksGenerator {
             return null;
         }
 
+
+
         //Expand Url
         try {
-            return patternFound.expand(params).toString();
+            return servletContext.getContextPath() + patternFound.expand(params).toString();
         } catch (Exception e) {
             log.error(e.getMessage() , e);
             if (throwExceptionIfExpandFails){
@@ -91,4 +96,8 @@ public class LinksGenerator {
         return link(controller , method, paramsAsMap);
     }
 
+    @Override
+    public void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
 }
