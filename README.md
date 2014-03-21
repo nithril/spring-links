@@ -5,15 +5,14 @@ Spring Links Generator create reusable url from controller#action. It adds to th
 
 For example take the following controller:
 ```java
-    @RequestMapping("/endpoint2/{symbolicName:[a-z-]+}-{version:\\d\\.\\d\\.\\d}{extension:\\.[a-z]+}")
+@RequestMapping("/endpoint2/{symbolicName:[a-z-]+}-{version:\\d\\.\\d\\.\\d}{extension:\\.[a-z]+}")
     public void endpoint2(@PathVariable String symbolicName , @PathVariable String version, @PathVariable String extension){
-    }
+}
 ```
 
 With the following template:
 ```html
-        <a th:with="link=${#links.link('sampleController' , 'endpoint2' , 'symbolicName' , 's1' , 'version' , 'v1' , 'extension' , 'e1')}"
-           th:href="${link}" th:text="${link}"></a>
+<a th:with="link=${#links.link('sampleController' , 'endpoint2' , 'symbolicName' , 's1' , 'version' , 'v1' , 'extension' , 'e1')}" th:href="${link}" th:text="${link}"></a>
 ```           
 
 
